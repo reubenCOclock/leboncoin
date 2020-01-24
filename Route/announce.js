@@ -13,8 +13,9 @@ router.post("/announce", isAuthentificated, async (req, res) => {
     description: req.fields.description,
     price: req.fields.price,
     poster: req.user._id,
-    date: new Date()
+    create: new Date()
   });
+
   await newAnnounce.save();
 
   const populatedAnnounce = await Announce.findOne({
@@ -27,6 +28,7 @@ router.post("/announce", isAuthentificated, async (req, res) => {
     title: populatedAnnounce.title,
     description: populatedAnnounce.description,
     price: populatedAnnounce.price,
+    createdAt: populatedAnnounce.create,
     creator: {
       account: {
         username: populatedAnnounce.poster.account.username
